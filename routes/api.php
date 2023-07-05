@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PendanaanController;
+use App\Http\Controllers\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/login', [UsersController::class, 'login']);
+Route::get('/pendanaan', [PendanaanController::class, 'getPendanaan']);
+Route::get('/metadata', [PendanaanController::class, 'getMetaData']);
+
+Route::post('/pendanaan', [PendanaanController::class, 'add'])->middleware('JwtAuth');
+Route::delete('/pendanaan/{id}', [PendanaanController::class, 'delete'])->middleware('JwtAuth');
+Route::put('/pendanaan/{id}', [PendanaanController::class, 'update'])->middleware('JwtAuth');
